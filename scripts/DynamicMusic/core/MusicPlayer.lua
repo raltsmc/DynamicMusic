@@ -1,4 +1,5 @@
 local ambient = require('openmw.ambient')
+local self = require('openmw.self')
 local Property = require('scripts.DynamicMusic.core.Property')
 
 local MusicPlayer = {}
@@ -80,6 +81,7 @@ function MusicPlayer._playNewTrack()
         ambient.streamMusic(track.path)
         playbackTimeProperty.current = 0
         MusicPlayer._removeAvailableTrack(track)
+        self:sendEvent('DM_TrackStarted')
     end
 end
 

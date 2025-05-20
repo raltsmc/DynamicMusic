@@ -21,6 +21,7 @@ local context
 local dynamicMusic
 
 local initialized = false
+local forceRestart = false
 
 local function initialize()
   if not initialized then
@@ -44,8 +45,8 @@ local function onFrame(dt)
   end
 
   context.gameState:update(dt)
-  dynamicMusic:update(dt)
-
+  dynamicMusic:update(dt, forceRestart)
+  forceRestart = false
 end
 
 local function engaging(eventData)
@@ -83,6 +84,9 @@ return {
   eventHandlers = {
     engaging = engaging,
     disengaging = disengaging,
-    globalDataCollected = globalDataCollected
+    globalDataCollected = globalDataCollected,
+    DM_ForceRestart = function()
+      forceRestart = true
+    end,
   },
 }

@@ -153,9 +153,15 @@ function DynamicMusic.info(self)
     end
 end
 
-function DynamicMusic.update(self, dt)
+function DynamicMusic.update(self, dt, forceRestart)
     MusicPlayer.update(dt)
     local gameState = self.context.gameState
+
+    if forceRestart then
+        self._delayTime = nil
+        self:newMusic({ force = true })
+        return
+    end
 
     if self._delayTime and self._delayTime <= 0 then
         self._delayTime = nil
